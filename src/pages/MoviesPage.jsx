@@ -1,8 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import MovieCardList from '../components/MovieCardList'
 import Navbar from '../components/Navbar'
 import { searchMovies } from '../services/omdbApi'
+
+const randomSearchTerms = [
+  'batman',
+  'spider',
+  'star',
+  'love',
+  'dark',
+  'war',
+  'king',
+  'game',
+]
 
 function MoviesPage() {
   const [search, setSearch] = useState('')
@@ -10,6 +21,39 @@ function MoviesPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
+
+  async function loadTwentyMovies(searchTerm) {
+    const firstPage = await searchMovies(searchTerm, 1)
+
+    try {
+      const secondPage = await searchMovies(searchTerm, 2)
+      return [...firstPage, ...secondPage].slice(0, 20)
+    } catch {
+      return firstPage.slice(0, 20)
+    }
+  }
+
+  useEffect(() => {
+    async function loadRandomMovies() {
+      const randomIndex = Math.floor(Math.random() * randomSearchTerms.length)
+      const randomTerm = randomSearchTerms[randomIndex]
+
+      setIsLoading(true)
+      setError('')
+
+      try {
+        const results = await loadTwentyMovies(randomTerm)
+        setMovies(results)
+      } catch (apiError) {
+        setMovies([])
+        setError(apiError.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadRandomMovies()
+  }, [])
 
   async function handleSearch(event) {
     event.preventDefault()
@@ -26,7 +70,7 @@ function MoviesPage() {
     setHasSearched(true)
 
     try {
-      const results = await searchMovies(search.trim())
+      const results = await loadTwentyMovies(search.trim())
       setMovies(results)
     } catch (apiError) {
       setMovies([])
@@ -45,7 +89,7 @@ function MoviesPage() {
           <h1 className="mb-3 text-3xl font-bold">Liste des films</h1>
           <p className="max-w-2xl text-slate-300">
             Recherche un film ou une série avec l'API OMDb. Les résultats sont
-            affichés sous forme de cartes.
+            affichés sous forme de cartes, avec un maximum de 20 résultats.
           </p>
         </div>
 
@@ -71,7 +115,7 @@ function MoviesPage() {
           </div>
         </form>
 
-        {!hasSearched && !error && (
+        {!hasSearched && !error && movies.length === 0 && !isLoading && (
           <p className="rounded-xl border border-slate-800 bg-slate-900 p-4 text-slate-300">
             Entre un titre pour commencer la recherche.
           </p>

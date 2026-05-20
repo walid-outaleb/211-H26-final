@@ -11,8 +11,10 @@ async function fetchOmdb(query) {
   return data
 }
 
-export async function searchMovies(searchTerm) {
-  const data = await fetchOmdb(`s=${encodeURIComponent(searchTerm)}`)
+export async function searchMovies(searchTerm, page = 1) {
+  const data = await fetchOmdb(
+    `s=${encodeURIComponent(searchTerm)}&page=${page}`,
+  )
 
   return data.Search || []
 }
