@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom'
+import { useFavorites } from '../context/FavoritesContext'
 
 function MovieCard({ movie }) {
+  // retourn N/A si pas dimage parfois
   const hasPoster = movie.Poster && movie.Poster !== 'N/A'
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites()
+  const movieIsFavorite = isFavorite(movie.imdbID)
+
+  function handleFavoriteClick() {
+    if (movieIsFavorite) {
+      removeFavorite(movie.imdbID)
+    } else {
+      addFavorite(movie)
+    }
+  }
 
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg">
@@ -25,12 +37,22 @@ function MovieCard({ movie }) {
           </p>
         </div>
 
-        <Link
-          to={`/films/${movie.imdbID}`}
-          className="inline-block rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:border-blue-500 hover:text-white"
-        >
-          Voir détails
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            to={`/films/${movie.imdbID}`}
+            className="inline-block rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:border-blue-500 hover:text-white"
+          >
+            Voir détails
+          </Link>
+
+          <button
+            type="button"
+            onClick={handleFavoriteClick}
+            className="rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+          >
+            {movieIsFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+          </button>
+        </div>
       </div>
     </article>
   )
