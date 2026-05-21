@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import Spinner from '../components/Spinner'
 import { getMovieDetails } from '../services/omdbApi'
 
 function MovieDetailsPage() {
@@ -43,11 +44,7 @@ function MovieDetailsPage() {
           Retour à la recherche
         </Link>
 
-        {isLoading && (
-          <p className="rounded-xl border border-slate-800 bg-slate-900 p-4 text-slate-300">
-            Chargement des détails...
-          </p>
-        )}
+        {isLoading && <Spinner message="Chargement des détails..." />}
 
         {error && (
           <p className="rounded-xl border border-red-900 bg-red-950 p-4 text-red-200">

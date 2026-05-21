@@ -1,9 +1,25 @@
-import { createContext, useContext, useState } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const FavoritesContext = createContext()
+const FAVORITES_STORAGE_KEY = 'cinesearch-favorites'
+
+function getSavedFavorites() {
+  const savedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY)
+
+  if (savedFavorites) {
+    return JSON.parse(savedFavorites)
+  }
+
+  return []
+}
 
 export function FavoritesProvider({ children }) {
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState(getSavedFavorites)
+
+  useEffect(() => {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
+  }, [favorites])
 
   function addFavorite(movie) {
     setFavorites((currentFavorites) => {

@@ -1,0 +1,61 @@
+Sources d'inspiration et de documentation utilisees
+
+1. Context React et etat global des favoris
+
+// Source: Documentation React - createContext
+// URL: https://react.dev/reference/react/createContext
+// Utilisation: comprendre comment creer un contexte React pour partager les favoris dans toute l'application.
+
+// Source: Documentation React - useContext
+// URL: https://react.dev/reference/react/useContext
+// Utilisation: comprendre comment lire les valeurs du contexte dans les composants comme MovieCard et FavoritesPage.
+
+// Source: Documentation React - useState
+// URL: https://react.dev/reference/react/useState
+// Utilisation: gerer la liste des favoris avec un etat React.
+
+// Source: Documentation React - useEffect
+// URL: https://react.dev/reference/react/useEffect
+// Utilisation: sauvegarder automatiquement les favoris quand la liste change.
+
+// Source: MDN Web Docs - localStorage
+// URL: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+// Utilisation: sauvegarder les favoris dans le navigateur pour les conserver apres un rafraichissement.
+
+
+2. Fonction de recherche et appels API OMDb
+
+// Source: OMDb API - Documentation officielle
+// URL: https://www.omdbapi.com/
+// Utilisation: comprendre les parametres de recherche comme s, i, page, apikey et plot.
+
+// Source: MDN Web Docs - fetch()
+// URL: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+// Utilisation: faire des requetes HTTP vers l'API OMDb avec fetch.
+
+// Source: MDN Web Docs - encodeURIComponent()
+// URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+// Utilisation: encoder les titres de films recherches, surtout quand ils contiennent des espaces.
+
+// Source: Documentation React - useEffect
+// URL: https://react.dev/reference/react/useEffect
+// Utilisation: charger automatiquement des films au hasard quand la page de recherche s'ouvre.
+
+
+3. Tailwind CSS
+
+// Source: Tailwind CSS - Utility-first fundamentals
+// URL: https://tailwindcss.com/docs/styling-with-utility-classes
+// Utilisation: comprendre l'utilisation des classes Tailwind directement dans le JSX.
+
+// Source: Tailwind CSS - Responsive design
+// URL: https://tailwindcss.com/docs/responsive-design
+// Utilisation: utiliser des classes comme sm:grid-cols-2 et lg:grid-cols-3 pour adapter les cartes selon la taille de l'ecran.
+
+// Source: Tailwind CSS - Animation
+// URL: https://tailwindcss.com/docs/animation
+// Utilisation: creer le spinner de chargement avec la classe animate-spin.
+
+// Source: Tailwind CSS - Border radius
+// URL: https://tailwindcss.com/docs/border-radius
+// Utilisation: styliser les cartes, boutons et blocs avec des classes comme rounded-xl et rounded-2xl.

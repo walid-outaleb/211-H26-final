@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import MovieCardList from '../components/MovieCardList'
 import Navbar from '../components/Navbar'
+import Spinner from '../components/Spinner'
 import { searchMovies } from '../services/omdbApi'
 
 const randomSearchTerms = [
@@ -22,14 +23,15 @@ function MoviesPage() {
   const [error, setError] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
 
-  async function loadTwentyMovies(searchTerm) {
+  async function loadThirtyMovies(searchTerm) {
     const firstPage = await searchMovies(searchTerm, 1)
 
     try {
       const secondPage = await searchMovies(searchTerm, 2)
-      return [...firstPage, ...secondPage].slice(0, 20)
+      const thirdPage = await searchMovies(searchTerm, 3)
+      return [...firstPage, ...secondPage, ...thirdPage].slice(0, 30)
     } catch {
-      return firstPage.slice(0, 20)
+      return firstPage.slice(0, 30)
     }
   }
 
@@ -42,7 +44,7 @@ function MoviesPage() {
       setError('')
 
       try {
-        const results = await loadTwentyMovies(randomTerm)
+        const results = await loadThirtyMovies(randomTerm)
         setMovies(results)
       } catch (apiError) {
         setMovies([])
@@ -70,7 +72,7 @@ function MoviesPage() {
     setHasSearched(true)
 
     try {
-      const results = await loadTwentyMovies(search.trim())
+      const results = await loadThirtyMovies(search.trim())
       setMovies(results)
     } catch (apiError) {
       setMovies([])
@@ -89,7 +91,7 @@ function MoviesPage() {
           <h1 className="mb-3 text-3xl font-bold">Liste des films</h1>
           <p className="max-w-2xl text-slate-300">
             Recherche un film ou une série avec l'API OMDb. Les résultats sont
-            affichés sous forme de cartes, avec un maximum de 20 résultats.
+            affichés sous forme de cartes, avec un maximum de 30 résultats.
           </p>
         </div>
 
@@ -121,11 +123,7 @@ function MoviesPage() {
           </p>
         )}
 
-        {isLoading && (
-          <p className="mt-8 rounded-xl border border-slate-800 bg-slate-900 p-4 text-slate-300">
-            Recherche en cours...
-          </p>
-        )}
+        {isLoading && <Spinner message="Recherche en cours..." />}
 
         {error && (
           <p className="mt-8 rounded-xl border border-red-900 bg-red-950 p-4 text-red-200">
