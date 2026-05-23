@@ -1,5 +1,9 @@
 Sources d'inspiration et de documentation utilisees
 
+// Source: Video youtube - utilisation de localStorage et useContext
+// URL: https://www.youtube.com/watch?v=siVVovFRzfw
+// Utilisation: comprendre comment utiliser useContext et localStorage dans le contexte  d'un project React.
+
 1. Context React et etat global des favoris
 
 // Source: Documentation React - createContext
